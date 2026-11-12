@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRENDY TOUCH | Premium Fashion</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#090909;color:#fff}
+header{padding:18px 15px;background:#111;border-bottom:1px solid #b99142;display:flex;justify-content:space-between;align-items:center}
+.logo{color:#d6ad55;font-size:22px;font-weight:bold}
+nav a{color:white;text-decoration:none;margin-left:12px;font-size:13px}
+.hero{text-align:center;padding:65px 18px;background:linear-gradient(135deg,#17130b,#050505)}
+.hero h1{font-size:38px;color:#e3bb69;margin-bottom:15px}
+.hero p{color:#ccc;line-height:1.7}
+.btn{display:inline-block;background:#d4aa55;color:#111;padding:13px 25px;border:0;border-radius:5px;font-weight:bold;text-decoration:none;margin-top:20px}
+section{padding:35px 15px}
+h2{text-align:center;color:#dfb85f;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:#171717;border:1px solid #333;border-radius:9px;overflow:hidden;text-align:center;padding-bottom:15px}
+.pic{height:130px;background:#242018;display:grid;place-items:center;font-size:55px}
+.card h3{margin:12px 5px;font-size:15px}
+.price{color:#e1b75d;font-weight:bold}
+.card button{background:#d4aa55;border:0;padding:9px 14px;border-radius:4px;margin-top:10px;font-weight:bold}
+.info{background:#141414;text-align:center;line-height:2;color:#ccc}
+footer{text-align:center;background:#111;padding:25px;color:#aaa;font-size:13px}
+input,select,textarea{width:100%;padding:13px;margin:7px 0;background:#191919;border:1px solid #555;color:white;border-radius:5px}
+#cart{color:#d4aa55}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✦ TRENDY TOUCH</div>
+<nav><a href="#home">Home</a><a href="#shop">Shop</a><a href="#contact">Contact</a></nav>
+</header>
+<div class="hero" id="home">
+<h1>STYLE THAT DEFINES YOU</h1>
+<p>Discover your perfect look with TRENDY TOUCH.<br>Premium fashion at affordable prices.</p>
+<a href="#shop" class="btn">SHOP NOW</a>
+</div>
+<section id="shop">
+<h2>OUR COLLECTION</h2>
+<div class="grid" id="products"></div>
+</section>
+<section class="info">
+<h2>WHY TRENDY TOUCH?</h2>
+<p>✦ Premium Fashion</p><p>✦ Affordable Prices</p><p>✦ Cash on Delivery</p><p>✦ Customer Support</p>
+</section>
+<section>
+<h2>YOUR CART (<span id="cart">0</span>)</h2>
+<div id="cartItems">Your cart is empty.</div>
+<h3 style="margin-top:15px;color:#d4aa55">Total: ৳<span id="total">0</span></h3>
+</section>
+<section id="checkout">
+<h2>PLACE YOUR ORDER</h2>
+<form id="orderForm">
+<input id="name" placeholder="Your Full Name" required>
+<input id="phone" placeholder="Mobile Number" required>
+<textarea id="address" placeholder="Delivery Address" required></textarea>
+<select id="payment"><option>Cash on Delivery</option><option>bKash (Manual Payment)</option><option>Nagad (Manual Payment)</option></select>
+<button class="btn" type="submit">ORDER ON WHATSAPP</button>
+</form>
+<p style="text-align:center;color:#d4aa55;margin-top:15px">bKash / Nagad: 01618281457</p>
+</section>
+<section class="info" id="contact">
+<h2>CONTACT US</h2><p>WhatsApp: 01618281457</p>
+<a class="btn" href="https://wa.me/8801618281457">CHAT ON WHATSAPP</a>
+</section>
+<footer>© 2026 TRENDY TOUCH. All Rights Reserved.</footer>
+<script>
+const products=[
+{name:"Premium T-Shirt",price:650,emoji:"👕"},
+{name:"Stylish Shirt",price:950,emoji:"👔"},
+{name:"Women's Fashion",price:850,emoji:"👗"},
+{name:"Premium Hoodie",price:1250,emoji:"🧥"},
+{name:"Casual Wear",price:750,emoji:"👚"},
+{name:"Fashion Collection",price:1100,emoji:"🛍️"}
+];
+let cart=[];
+const productArea=document.getElementById("products");
+products.forEach((p,i)=>{productArea.innerHTML+=`<div class="card"><div class="pic">${p.emoji}</div><h3>${p.name}</h3><div class="price">৳${p.price}</div><button onclick="addCart(${i})">ADD TO CART</button></div>`;});
+function addCart(i){cart.push(products[i]);renderCart();}
+function renderCart(){
+document.getElementById("cart").innerText=cart.length;
+document.getElementById("total").innerText=cart.reduce((s,p)=>s+p.price,0);
+document.getElementById("cartItems").innerHTML=cart.length?cart.map(p=>p.name+" — ৳"+p.price).join("<br>"):"Your cart is empty.";
+}
+document.getElementById("orderForm").addEventListener("submit",function(e){
+e.preventDefault();
+if(!cart.length){alert("Please add products to cart first!");return;}
+let items=cart.map(p=>p.name+" ৳"+p.price).join("%0A");
+let total=cart.reduce((s,p)=>s+p.price,0);
+let msg=`New TRENDY TOUCH Order%0AName: ${encodeURIComponent(document.getElementById("name").value)}%0APhone: ${encodeURIComponent(document.getElementById("phone").value)}%0AAddress: ${encodeURIComponent(document.getElementById("address").value)}%0APayment: ${encodeURIComponent(document.getElementById("payment").value)}%0AProducts:%0A${items}%0ATotal: ৳${total}`;
+window.open("https://wa.me/8801618281457?text="+msg,"_blank");
+});
+</script>
+</body>
+</html>
